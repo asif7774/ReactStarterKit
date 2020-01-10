@@ -1,0 +1,19 @@
+@import './themes/default';
+@import './variables';
+
+html, body{
+    min-height: 100vh;
+}
+.icon {
+  width: 16px;
+  height: auto;
+  fill: #fff;
+  &.icon-dark{
+    fill:$gray-900;
+    .with-icon &{
+      fill:$gray-900;
+    }
+  }
+}
+.cursor-pointer{cursor: pointer;}
+

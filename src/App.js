@@ -1,17 +1,18 @@
 import React from 'react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+//App routes
+import routes from "./routes";
+
+//Svg Sprite
 import svgFile from './assets/images/svg/svg-sprite.svg';
 
 
 class App extends React.Component {
-  constructor(props) {
-      super(props);
-      this.state = {
-        posts: []
-      }
-  }
   componentDidMount() {
     this.svgSprite()
   }
+
   svgSprite(){    
     let svgVersion = "1.00";
     console.log("SVG Sprite version : " + svgVersion);
@@ -59,22 +60,26 @@ class App extends React.Component {
   }
   render(){
     return (
-      <div className="App">
-        <header className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router basename={process.env.REACT_APP_BASENAME || ""}>
+      <React.Fragment>
+        {routes.map((route, index) => {
+          return (
+            <Route
+              key={index}
+              path={route.path}
+              exact={route.exact}
+              component={props => {
+                return (
+                  <route.layout {...props}>
+                    <route.component {...props} />
+                  </route.layout>
+                );
+              }}
+            />
+          );
+        })}
+      </React.Fragment>
+    </Router>
     );
   }
 }
